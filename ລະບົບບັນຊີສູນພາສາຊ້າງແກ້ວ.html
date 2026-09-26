@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ສູນພາສາຊ້າງແກ້ວ - ລະບົບຄຸ້ມຄອງລາຍຮັບ-ລາຍຈ່າຍ & ພິມລາຍງານ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for interactive charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lao Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        navy: {
+                            700: '#1e293b',
+                            800: '#0f172a',
+                            900: '#020617',
+                        }
+                    },
+                    fontFamily: {
+                        lao: ['"Noto Sans Lao"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans Lao', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        /* Printable Layout CSS - Optimized strictly for Standard A4 Paper */
+        @page {
+            size: A4 portrait;
+            margin: 10mm 12mm 10mm 12mm;
+        }
+
+        @media print {
+            html, body {
+                width: 210mm;
+                height: 100%;
+                background: #ffffff !important;
+                color: #000000 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 11pt;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* Hide everything by default */
+            body * {
+                visibility: hidden !important;
+            }
+
+            /* Show active printable section */
+            .printable-active, .printable-active * {
+                visibility: visible !important;
+            }
+
+            /* Position the printable content on page top */
+            .printable-active {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                background: #ffffff !important;
+                overflow: visible !important;
+            }
+
+            /* Modal overlays reset for clean printout */
+            #receipt-modal, #daily-report-modal {
+                position: static !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+            }
+
+            #receipt-modal > div, #daily-report-modal > div {
+                box-shadow: none !important;
+                border: none !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            /* Ensure tables and signature blocks don't get ugly breaks across pages */
+            .page-break-avoid, table, tr, .signature-block {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+        }
+
+        .report-table th, .report-table td {
+            border: 1px solid #475569;
+            padding: 5px 7px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <header class="bg-navy-800 text-white shadow-md no-print sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-white text-navy-800 rounded-full flex items-center justify-center font-bold text-xl shadow overflow-hidden p-1">
+                    <svg viewBox="0 0 100 100" class="w-full h-full text-brand-700" fill="currentColor">
+                        <!-- Elephant with Graduation Cap Logo SVG -->
+                        <path d="M50 12 L85 28 L50 44 L15 28 Z" fill="#15803d"/>
+                        <rect x="75" y="28" width="4" height="15" fill="#15803d"/>
+                        <circle cx="77" cy="45" r="3" fill="#15803d"/>
+                        <path d="M30 42 C 20 42, 15 50, 15 65 C 15 78, 22 88, 35 88 C 42 88, 48 84, 50 80 C 52 84, 58 88, 65 88 C 78 88, 85 78, 85 65 C 85 50, 80 42, 70 42 C 60 42, 55 48, 50 52 C 45 48, 40 42, 30 42 Z" fill="#16a34a"/>
+                        <circle cx="35" cy="58" r="4" fill="#ffffff"/>
+                        <circle cx="65" cy="58" r="4" fill="#ffffff"/>
+                        <path d="M46 68 C 46 78, 42 84, 38 86 C 42 88, 50 88, 52 80 C 54 88, 62 88, 66 86 C 62 84, 58 78, 58 68 Z" fill="#ffffff"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">ສູນພາສາຊ້າງແກ້ວ</h1>
+                    <p class="text-xs text-slate-300">Xangkheo Language Center | ບ້ານດອນເກົ່າ, ນະຄອນ ແລະ ແຂວງຫຼວງພະບາງ</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="openDailyReportModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-3 py-2 rounded-lg text-xs flex items-center gap-2 shadow transition">
+                    <i class="fa-solid fa-print text-sm"></i> ພິມລາຍງານປະຈຳວັນ (Daily Report)
+                </button>
+                <div class="hidden sm:flex items-center gap-2 text-xs text-slate-300 bg-navy-700 p-2 rounded-lg border border-slate-700">
+                    <i class="fa-solid fa-phone text-brand-600"></i> +85620 51111311
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="bg-navy-900 border-t border-slate-700">
+            <div class="max-w-7xl mx-auto px-4 flex overflow-x-auto gap-2">
+                <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="px-4 py-2.5 font-medium text-sm border-b-2 border-brand-600 text-brand-600 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-chart-pie"></i> ສະຫຼຸບລາຍງານ (Dashboard)
+                </button>
+                <button onclick="switchTab('transaction')" id="tab-btn-transaction" class="px-4 py-2.5 font-medium text-sm border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-plus-circle"></i> ບັນທຶກ ລາຍຮັບ-ລາຍຈ່າຍ
+                </button>
+                <button onclick="switchTab('students')" id="tab-btn-students" class="px-4 py-2.5 font-medium text-sm border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-user-graduate"></i> ຕິດຕາມ & ຄົ້ນຫານັກຮຽນ
+                </button>
+                <button onclick="switchTab('expenses')" id="tab-btn-expenses" class="px-4 py-2.5 font-medium text-sm border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-receipt"></i> ຈັດການລາຍຈ່າຍ (Expenses)
+                </button>
+                <button onclick="switchTab('backup')" id="tab-btn-backup" class="px-4 py-2.5 font-medium text-sm border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-database"></i> ສຳຮອງ & ດາວໂຫຼດຂໍ້ມູນ
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 no-print">
+
+        <!-- DASHBOARD TAB -->
+        <section id="tab-dashboard" class="space-y-6">
+            <!-- Filter Bar -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-2 font-semibold text-slate-700 text-sm">
+                    <i class="fa-solid fa-filter text-brand-600"></i> ກັ່ນກອງຂໍ້ມູນຕາມວັນທີ:
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="setDateRange('today')" class="px-3 py-1.5 text-xs font-medium bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700">ມື້ນີ້</button>
+                    <button onclick="setDateRange('thisMonth')" class="px-3 py-1.5 text-xs font-medium bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700">ເດືອນນີ້</button>
+                    <button onclick="setDateRange('all')" class="px-3 py-1.5 text-xs font-medium bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700">ທັງໝົດ</button>
+                    <span class="text-slate-300">|</span>
+                    <input type="date" id="filter-start-date" onchange="renderDashboard()" class="text-xs p-1.5 border border-slate-300 rounded-lg">
+                    <span class="text-xs text-slate-500">ຫາ</span>
+                    <input type="date" id="filter-end-date" onchange="renderDashboard()" class="text-xs p-1.5 border border-slate-300 rounded-lg">
+                    <button onclick="openDailyReportModal()" class="ml-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow">
+                        <i class="fa-solid fa-print"></i> ພິມລາຍງານ A4
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-emerald-100 border-l-4 border-l-emerald-500">
+                    <div class="text-slate-500 text-xs font-medium">ລາຍຮັບທັງໝົດ</div>
+                    <div id="kpi-total-income" class="text-xl font-bold text-emerald-600 mt-1">0 ກີບ</div>
+                    <div class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-arrow-down-long text-emerald-500"></i> ລວມຮັບທຸກຊ່ອງທາງ</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-rose-100 border-l-4 border-l-rose-500">
+                    <div class="text-slate-500 text-xs font-medium">ລາຍຈ່າຍທັງໝົດ</div>
+                    <div id="kpi-total-expense" class="text-xl font-bold text-rose-600 mt-1">0 ກີບ</div>
+                    <div class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-arrow-up-long text-rose-500"></i> ບໍລິຫານ/ອື່ນໆ</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-blue-100 border-l-4 border-l-blue-500">
+                    <div class="text-slate-500 text-xs font-medium">ຍອດເຫຼືອສຸທິ (ກຳໄລ)</div>
+                    <div id="kpi-net-balance" class="text-xl font-bold text-blue-600 mt-1">0 ກີບ</div>
+                    <div class="text-[10px] text-slate-400 mt-1">ລາຍຮັບ - ລາຍຈ່າຍ</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-amber-100 border-l-4 border-l-amber-500">
+                    <div class="text-slate-500 text-xs font-medium">ເງິນສົດ (Cash)</div>
+                    <div id="kpi-cash-total" class="text-xl font-bold text-amber-600 mt-1">0 ກີບ</div>
+                    <div class="text-[10px] text-slate-400 mt-1">ລວມຮັບເປັນເງິນສົດ</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-purple-100 border-l-4 border-l-purple-500">
+                    <div class="text-slate-500 text-xs font-medium">ເງິນໂອນ (BCEL/Transfer)</div>
+                    <div id="kpi-transfer-total" class="text-xl font-bold text-purple-600 mt-1">0 ກີບ</div>
+                    <div class="text-[10px] text-slate-400 mt-1">ລວມຮັບຜ່ານການໂອນ</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-red-200 border-l-4 border-l-red-600 bg-red-50/20">
+                    <div class="text-slate-600 text-xs font-medium">ຍອດຄ້າງຈ່າຍ (Unpaid)</div>
+                    <div id="kpi-unpaid-total" class="text-xl font-bold text-red-600 mt-1">0 ກີບ</div>
+                    <div class="text-[10px] text-red-400 mt-1">ນັກຮຽນຍັງບໍ່ທັນຈ່າຍ</div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-brand-600"></i> ປຽບທຽບ ລາຍຮັບ vs ລາຍຈ່າຍ
+                    </h3>
+                    <div class="h-64">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-brand-600"></i> ສັດສ່ວນຮູບແບບການຈ່າຍ ( Payment Methods )
+                    </h3>
+                    <div class="h-64 flex justify-center">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity Table -->
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-brand-600"></i> ລາຍການຫຼ້າສຸດ
+                    </h3>
+                    <button onclick="openDailyReportModal()" class="text-xs text-brand-700 hover:text-brand-800 font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-file-invoice"></i> ພິມລາຍງານທັງໝົດ A4
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left">
+                        <thead class="bg-slate-100 text-slate-600 uppercase font-semibold">
+                            <tr>
+                                <th class="p-2.5">ວັນທີ</th>
+                                <th class="p-2.5">ປະເພດ</th>
+                                <th class="p-2.5">ເລກທີ</th>
+                                <th class="p-2.5">ຊື່ແລະນາມສະກຸນຜູ້ຮຽນ</th>
+                                <th class="p-2.5">ວິຊາ / ລະດັບ</th>
+                                <th class="p-2.5">ຮູບແບບ</th>
+                                <th class="p-2.5">ສະຖານະ</th>
+                                <th class="p-2.5 text-right">ຈຳນວນເງິນ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-transactions-tbody" class="divide-y divide-slate-100">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRANSACTION TAB -->
+        <section id="tab-transaction" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 max-w-3xl mx-auto">
+                <h2 class="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-brand-600"></i> ບັນທຶກທຸລະກຳໃໝ່
+                </h2>
+
+                <form id="transaction-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="transType" value="income" checked onchange="toggleFormFields()" class="peer sr-only">
+                            <div class="p-3 text-center rounded-lg border-2 border-slate-200 peer-checked:border-emerald-500 peer-checked:bg-emerald-50 peer-checked:text-emerald-700 font-semibold text-sm transition">
+                                <i class="fa-solid fa-hand-holding-dollar mr-1"></i> ລາຍຮັບ (Income)
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="transType" value="expense" onchange="toggleFormFields()" class="peer sr-only">
+                            <div class="p-3 text-center rounded-lg border-2 border-slate-200 peer-checked:border-rose-500 peer-checked:bg-rose-50 peer-checked:text-rose-700 font-semibold text-sm transition">
+                                <i class="fa-solid fa-money-bill-transfer mr-1"></i> ລາຍຈ່າຍ (Expense)
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ເລກທີໃບບິນ (Receipt No.) *</label>
+                            <input type="text" id="tx-id" placeholder="0001" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm font-bold text-brand-700 outline-none focus:ring-2 focus:ring-brand-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ວັນທີ *</label>
+                            <input type="date" id="tx-date" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                        </div>
+                        <div>
+                            <label id="lbl-payer-name" class="block text-xs font-semibold text-slate-600 mb-1">ຊື່ແລະນາມສະກຸນຜູ້ຮຽນ *</label>
+                            <input type="text" id="tx-payer" placeholder="ຕົວຢ່າງ: ສົມຊາຍ ໃຈດີ" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ເບີໂທລະສັບ</label>
+                            <input type="text" id="tx-phone" placeholder="020 XXXXXXXX" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                        </div>
+                        <div id="course-selection-box">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ຫຼັກສູດ / ວິຊາຮຽນ / ໝວດໝູ່</label>
+                            <select id="tx-course" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                                <option value="">-- ເລືອກຫຼັກສູດ/ໝວດໝູ່ --</option>
+                                <optgroup label="ພາສາຈີນສຳລັບເດັກ (Chinese for Kids)">
+                                    <option value="ພາສາຈີນສຳລັບເດັກ ລະດັບ 1">ພາສາຈີນສຳລັບເດັກ ລະດັບ 1</option>
+                                    <option value="ພາສາຈີນສຳລັບເດັກ ລະດັບ 2">ພາສາຈີນສຳລັບເດັກ ລະດັບ 2</option>
+                                    <option value="ພາສາຈີນສຳລັບເດັກ ລະດັບ 3">ພາສາຈີນສຳລັບເດັກ ລະດັບ 3</option>
+                                    <option value="ພາສາຈີນສຳລັບເດັກ ລະດັບ 4">ພາສາຈີນສຳລັບເດັກ ລະດັບ 4</option>
+                                </optgroup>
+                                <optgroup label="ພາສາຈີນສຳລັບຜູ້ໃຫຍ່ (Chinese for Adults)">
+                                    <option value="ພາສາຈີນສຳລັບຜູ້ໃຫຍ່ ລະດັບ 1">ພາສາຈີນສຳລັບຜູ້ໃຫຍ່ ລະດັບ 1</option>
+                                    <option value="ພາສາຈີນສຳລັບຜູ້ໃຫຍ່ ລະດັບ 2">ພາສາຈີນສຳລັບຜູ້ໃຫຍ່ ລະດັບ 2</option>
+                                    <option value="ພາສາຈີນສຳລັບຜູ້ໃຫຍ່ ລະດັບ 3">ພາສາຈີນສຳລັບຜູ້ໃຫຍ່ ລະດັບ 3</option>
+                                    <option value="ພາສາຈີນສຳລັບຜູ້ໃຫຍ່ ລະດັບ 4">ພາສາຈີນສຳລັບຜູ້ໃຫຍ່ ລະດັບ 4</option>
+                                </optgroup>
+                                <optgroup label="ພາສາອັງກິດສຳລັບເດັກ (English for Kids)">
+                                    <option value="ພາສາອັງກິດສຳລັບເດັກ ລະດັບ 1">ພາສາອັງກິດສຳລັບເດັກ ລະດັບ 1</option>
+                                    <option value="ພາສາອັງກິດສຳລັບເດັກ ລະດັບ 2">ພາສາອັງກິດສຳລັບເດັກ ລະດັບ 2</option>
+                                    <option value="ພາສາອັງກິດສຳລັບເດັກ ລະດັບ 3">ພາສາອັງກິດສຳລັບເດັກ ລະດັບ 3</option>
+                                    <option value="ພາສາອັງກິດສຳລັບເດັກ ລະດັບ 4">ພາສາອັງກິດສຳລັບເດັກ ລະດັບ 4</option>
+                                </optgroup>
+                                <optgroup label="ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ (English for Adults)">
+                                    <option value="ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ ລະດັບ 1">ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ ລະດັບ 1</option>
+                                    <option value="ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ ລະດັບ 2">ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ ລະດັບ 2</option>
+                                    <option value="ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ ລະດັບ 3">ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ ລະດັບ 3</option>
+                                    <option value="ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ ລະດັບ 4">ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ ລະດັບ 4</option>
+                                </optgroup>
+                                <optgroup label="ໝວດໝູ່ລາຍຈ່າຍ (Expense Categories)">
+                                    <option value="ສາທາລະນຸປະໂພກ">ສາທາລະນຸປະໂພກ (ຄ່າໄຟ, ຄ່ານ້ຳ, ເນັດ)</option>
+                                    <option value="ເງິນເດືອນ/ຄ່າຈ້າງ">ເງິນເດືອນ/ຄ່າຈ້າງຄູ-ພະນັກງານ</option>
+                                    <option value="ອຸປະກອນການຮຽນ">ອຸປະກອນການຮຽນ/ປື້ມ</option>
+                                    <option value="ຄ່າສ້ອມແປມ/ບຳລຸງຮັກສາ">ຄ່າສ້ອມແປມ/ບຳລຸງຮັກສາ</option>
+                                </optgroup>
+                                <option value="ອື່ນໆ">ອື່ນໆ / Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ຫ້ອງຮຽນ (Classroom)</label>
+                            <input type="text" id="tx-classroom" placeholder="ຕົວຢ່າງ: ຫ້ອງ A1" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ຈຳນວນ (Quantity)</label>
+                            <input type="number" id="tx-qty" value="1" min="1" oninput="calculateTotalAmount()" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ລາຄາຕໍ່ໜ່ວຍ (ກີບ) *</label>
+                            <input type="number" id="tx-price" placeholder="0" min="0" required oninput="calculateTotalAmount()" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ສ່ວນຫຼຸດ (Discount - ກີບ)</label>
+                            <input type="number" id="tx-discount" value="0" min="0" oninput="calculateTotalAmount()" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ຈຳນວນເງິນລວມສຸທິ (ກີບ)</label>
+                            <input type="number" id="tx-amount" readonly class="w-full p-2.5 bg-slate-100 border border-slate-300 rounded-lg text-sm font-bold text-brand-700 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ຮູບແບບການຈ່າຍ *</label>
+                            <select id="tx-payment-method" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                                <option value="ເງິນສົດ">ເງິນສົດ (Cash)</option>
+                                <option value="ໂອນ">ໂອນ (Transfer / BCEL One)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ສະຖານະການຈ່າຍ *</label>
+                            <select id="tx-status" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+                                <option value="ຈ່າຍແລ້ວ">ຈ່າຍແລ້ວ (Paid)</option>
+                                <option value="ຄ້າງຈ່າຍ">ຄ້າງຈ່າຍ (Pending/Unpaid)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ໝາຍເຫດ / ລາຍລະອຽດເພີ່ມເຕີມ</label>
+                        <textarea id="tx-note" rows="2" placeholder="ເພີ່ມຂໍ້ມູນເພີ່ມເຕີມຖ້າມີ..." class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-600 outline-none"></textarea>
+                    </div>
+
+                    <div class="pt-2 flex gap-3">
+                        <button type="submit" class="flex-1 bg-brand-700 hover:bg-brand-800 text-white font-semibold py-2.5 px-4 rounded-lg text-sm transition shadow">
+                            <i class="fa-solid fa-floppy-disk mr-1"></i> ບັນທຶກຂໍ້ມູນ
+                        </button>
+                        <button type="button" onclick="resetForm()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-2.5 px-4 rounded-lg text-sm transition">
+                            ລ້າງຟອມ
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- STUDENTS TAB -->
+        <section id="tab-students" class="hidden space-y-6">
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800">ຕິດຕາມ & ຄົ້ນຫາການຈ່າຍຄ່າຮຽນ ( Income Records )</h2>
+                        <p class="text-xs text-slate-500">ຄົ້ນຫາຂໍ້ມູນນັກຮຽນ, ກວດສອບສະຖານະການຈ່າຍ, ແກ້ໄຂ ແລະ ພິມໃບບິນ</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
+                    <div class="col-span-1 md:col-span-2">
+                        <input type="text" id="search-student-input" onkeyup="renderStudentList()" placeholder="ຄົ້ນຫາຕາມ: ຊື່ແລະນາມສະກຸນຜູ້ຮຽນ, ເບີໂທ, ຫຼື ເລກທີໃບບິນ..." class="w-full p-2.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-brand-600">
+                    </div>
+                    <div>
+                        <select id="filter-course-select" onchange="renderStudentList()" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-brand-600">
+                            <option value="">-- ທຸກຫຼັກສູດ --</option>
+                            <option value="ພາສາຈີນສຳລັບເດັກ">ພາສາຈີນສຳລັບເດັກ</option>
+                            <option value="ພາສາຈີນສຳລັບຜູ້ໃຫຍ່">ພາສາຈີນສຳລັບຜູ້ໃຫຍ່</option>
+                            <option value="ພາສາອັງກິດສຳລັບເດັກ">ພາສາອັງກິດສຳລັບເດັກ</option>
+                            <option value="ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່">ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="filter-status-select" onchange="renderStudentList()" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-brand-600">
+                            <option value="">-- ທຸກສະຖານະ --</option>
+                            <option value="ຈ່າຍແລ້ວ">ຈ່າຍແລ້ວ (Paid)</option>
+                            <option value="ຄ້າງຈ່າຍ">ຄ້າງຈ່າຍ (Pending)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="p-3">ເລກທີໃບບິນ</th>
+                                <th class="p-3">ວັນທີ</th>
+                                <th class="p-3">ຊື່ແລະນາມສະກຸນຜູ້ຮຽນ</th>
+                                <th class="p-3">ເບີໂທ</th>
+                                <th class="p-3">ຫຼັກສູດ</th>
+                                <th class="p-3">ຫ້ອງຮຽນ</th>
+                                <th class="p-3">ຮູບແບບ</th>
+                                <th class="p-3">ຈຳນວນເງິນ (ກີບ)</th>
+                                <th class="p-3">ສະຖານະ</th>
+                                <th class="p-3">ໝາຍເຫດ</th>
+                                <th class="p-3 text-center">ຈັດການ / ພິມໃບບິນ A4</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-list-tbody" class="divide-y divide-slate-200">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPENSES TAB -->
+        <section id="tab-expenses" class="hidden space-y-6">
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800">ຈັດການ ແລະ ແກ້ໄຂ/ລົບ ລາຍຈ່າຍ ( Expense Ledger )</h2>
+                        <p class="text-xs text-slate-500">ຄົ້ນຫາ, ແກ້ໄຂຂໍ້ມູນ ຫຼື ລຶບລາຍການລາຍຈ່າຍບໍລິຫານ ແລະ ສາທາລະນຸປະໂພກ</p>
+                    </div>
+                    <button onclick="switchTab('transaction'); setExpenseMode();" class="bg-rose-600 hover:bg-rose-700 text-white px-3.5 py-2 rounded-lg text-xs font-semibold shadow flex items-center gap-1.5 self-start md:self-auto">
+                        <i class="fa-solid fa-plus"></i> ເພີ່ມລາຍຈ່າຍໃໝ່
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                    <div class="col-span-1 md:col-span-2">
+                        <input type="text" id="search-expense-input" onkeyup="renderExpenseList()" placeholder="ຄົ້ນຫາຕາມ: ລາຍລະອຽດ/ຜູ້ຮັບເງິນ, ໝວດໝູ່, ເລກທີ, ຫຼື ໝາຍເຫດ..." class="w-full p-2.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-rose-500">
+                    </div>
+                    <div>
+                        <select id="filter-expense-method" onchange="renderExpenseList()" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-rose-500">
+                            <option value="">-- ທຸກຮູບແບບການຈ່າຍ --</option>
+                            <option value="ເງິນສົດ">ເງິນສົດ (Cash)</option>
+                            <option value="ໂອນ">ໂອນ (Transfer)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead class="bg-rose-50 text-rose-900 font-bold border-b border-rose-200">
+                            <tr>
+                                <th class="p-3">ເລກທີ</th>
+                                <th class="p-3">ວັນທີ</th>
+                                <th class="p-3">ລາຍລະອຽດ / ຜູ້ຮັບເງິນ</th>
+                                <th class="p-3">ໝວດໝູ່</th>
+                                <th class="p-3">ຮູບແບບການຈ່າຍ</th>
+                                <th class="p-3 text-right">ຈຳນວນເງິນ (ກີບ)</th>
+                                <th class="p-3">ໝາຍເຫດ</th>
+                                <th class="p-3 text-center">ຈັດການ (Actions)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expense-list-tbody" class="divide-y divide-slate-200">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- BACKUP TAB -->
+        <section id="tab-backup" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-base font-bold text-slate-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-file-excel text-emerald-600"></i> ດາວໂຫຼດ / ປົກປ້ອງຂໍ້ມູນ (Export Data)
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-4">ທ່ານສາມາດເລືອກຊ່ວງວັນທີ ແລະ ດາວໂຫຼດຂໍ້ມູນອອກເປັນ File CSV (Excel) ຫຼື ໄຟລ໌ JSON ສຳຮອງຂໍ້ມູນ.</p>
+                    
+                    <!-- Date Range Selection for Export -->
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mb-4 space-y-2">
+                        <label class="block text-xs font-bold text-slate-700">ເລືອກຊ່ວງວັນທີທີ່ຕ້ອງການດາວໂຫຼດ (Option):</label>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="date" id="export-start-date" class="text-xs p-1.5 border border-slate-300 rounded-lg">
+                            <span class="text-xs text-slate-500">ຫາ</span>
+                            <input type="date" id="export-end-date" class="text-xs p-1.5 border border-slate-300 rounded-lg">
+                            <button onclick="clearExportDates()" class="text-xs text-slate-500 hover:text-slate-700 underline">ລ້າງວັນທີ (ໂຫຼດທັງໝົດ)</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg text-xs flex items-center gap-2 shadow">
+                            <i class="fa-solid fa-download"></i> ດາວໂຫຼດ Excel (CSV)
+                        </button>
+                        <button onclick="exportToJSON()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg text-xs flex items-center gap-2 shadow">
+                            <i class="fa-solid fa-database"></i> ສຳຮອງຂໍ້ມູນ (JSON Backup)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-base font-bold text-slate-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-file-arrow-up text-indigo-600"></i> ນຳເຂົ້າຂໍ້ມູນ (Import Backup File)
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-4">ເລືອກໄຟລ໌ JSON ທີ່ທ່ານເຄີຍສຳຮອງໄວ້ເພື່ອຟື້ນຟູຂໍ້ມູນເຂົ້າໃນລະບົບ.</p>
+                    <div class="flex items-center gap-3">
+                        <input type="file" id="import-file-input" accept=".json" class="text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                        <button onclick="importJSONData()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg text-xs flex items-center gap-1 shadow">
+                            <i class="fa-solid fa-upload"></i> ນຳເຂົ້າ
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-red-50 border border-red-200 rounded-xl p-5">
+                <h4 class="text-xs font-bold text-red-700 uppercase tracking-wider mb-1">ເຂດອັນຕະລາຍ / Reset System</h4>
+                <p class="text-xs text-red-600 mb-3">ການລຶບຂໍ້ມູນຕົວຢ່າງ ຫຼື ລຶບຂໍ້ມູນທັງໝົດຈະບໍ່ສາມາດເອົາຄືນໄດ້.</p>
+                <button onclick="clearAllData()" class="bg-red-600 hover:bg-red-700 text-white font-medium px-3 py-1.5 rounded-lg text-xs">
+                    <i class="fa-solid fa-trash-can mr-1"></i> ລຶບຂໍ້ມູນທັງໝົດໃນລະບົບ
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Daily Report Modal -->
+    <div id="daily-report-modal" class="fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full p-4 sm:p-6 my-8 relative border border-slate-300">
+            <div class="flex flex-wrap justify-between items-center mb-4 pb-2 border-b border-slate-200 no-print gap-2">
+                <div class="flex items-center gap-2">
+                    <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                        <i class="fa-solid fa-file-invoice-dollar text-brand-700"></i> ພິມລາຍງານປະຈຳວັນ (Daily Income & Expense Report)
+                    </h3>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label class="text-xs font-semibold text-slate-600">ເລືອກວັນທີ:</label>
+                    <input type="date" id="report-target-date" onchange="generateDailyReport()" class="text-xs p-1.5 border border-slate-300 rounded-lg">
+                    <button onclick="executePrint('daily-report-container')" class="bg-brand-700 hover:bg-brand-800 text-white px-4 py-1.5 rounded-lg text-xs font-semibold shadow flex items-center gap-1">
+                        <i class="fa-solid fa-print"></i> ພິມລາຍງານ A4
+                    </button>
+                    <button onclick="closeDailyReportModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold">
+                        ປິດອອກ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Printable Daily Report Document - Strictly Formatted for A4 -->
+            <div id="daily-report-container" class="bg-white text-slate-900 p-2 sm:p-4 text-xs font-lao">
+                <!-- Header -->
+                <div class="text-center border-b-2 border-slate-800 pb-3 mb-4 flex flex-col items-center">
+                    <div class="w-16 h-16 mb-2">
+                        <svg viewBox="0 0 100 100" class="w-full h-full text-slate-800" fill="currentColor">
+                            <path d="M50 12 L85 28 L50 44 L15 28 Z" fill="#15803d"/>
+                            <rect x="75" y="28" width="4" height="15" fill="#15803d"/>
+                            <circle cx="77" cy="45" r="3" fill="#15803d"/>
+                            <path d="M30 42 C 20 42, 15 50, 15 65 C 15 78, 22 88, 35 88 C 42 88, 48 84, 50 80 C 52 84, 58 88, 65 88 C 78 88, 85 78, 85 65 C 85 50, 80 42, 70 42 C 45 48, 40 42, 30 42 Z" fill="#16a34a"/>
+                            <circle cx="35" cy="58" r="4" fill="#ffffff"/>
+                            <circle cx="65" cy="58" r="4" fill="#ffffff"/>
+                            <path d="M46 68 C 46 78, 42 84, 38 86 C 42 88, 50 88, 52 80 C 54 88, 62 88, 66 86 C 62 84, 58 78, 58 68 Z" fill="#ffffff"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-bold tracking-tight text-slate-900">ສູນພາສາຊ້າງແກ້ວ</h2>
+                    <p class="text-xs">ບ້ານດອນເກົ່າ, ນະຄອນ ແລະ ແຂວງຫຼວງພະບາງ</p>
+                    <p class="text-[11px] text-slate-600">Email: xklc.languagecenter@gmail.com | ໂທ: +85620 51111311</p>
+                    <p class="text-[11px] text-slate-600">ທະນາຄານການຄ້າ: 051-12-11008559 LITHIGHA KHATTIGHALATH MR</p>
+                    <div class="mt-2 text-base font-bold underline decoration-2 underline-offset-4">
+                        ໃບສະຫຼຸບລາຍຮັບ - ລາຍຈ່າຍ ປະຈຳວັນ (Daily Transaction Summary)
+                    </div>
+                    <p class="text-xs font-semibold text-slate-700 mt-1">
+                        ປະຈຳວັນທີ: <span id="report-date-display" class="font-bold text-brand-800"></span>
+                    </p>
+                </div>
+
+                <!-- KPI Summary Box inside Printable Report -->
+                <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center mb-4 page-break-avoid">
+                    <div class="border border-slate-400 p-2 rounded bg-emerald-50">
+                        <div class="text-[10px] text-slate-700 font-bold">ລາຍຮັບທັງໝົດ</div>
+                        <div id="rp-income" class="font-bold text-emerald-800 text-xs mt-0.5">0</div>
+                    </div>
+                    <div class="border border-slate-400 p-2 rounded bg-rose-50">
+                        <div class="text-[10px] text-slate-700 font-bold">ລາຍຈ່າຍທັງໝົດ</div>
+                        <div id="rp-expense" class="font-bold text-rose-800 text-xs mt-0.5">0</div>
+                    </div>
+                    <div class="border border-slate-400 p-2 rounded bg-blue-50">
+                        <div class="text-[10px] text-slate-700 font-bold">ຍອດເຫຼືອສຸທິ</div>
+                        <div id="rp-net" class="font-bold text-blue-800 text-xs mt-0.5">0</div>
+                    </div>
+                    <div class="border border-slate-400 p-2 rounded bg-amber-50">
+                        <div class="text-[10px] text-slate-700 font-bold">ເງິນສົດ (Cash)</div>
+                        <div id="rp-cash" class="font-bold text-amber-800 text-xs mt-0.5">0</div>
+                    </div>
+                    <div class="border border-slate-400 p-2 rounded bg-purple-50">
+                        <div class="text-[10px] text-slate-700 font-bold">ເງິນໂອນ (Transfer)</div>
+                        <div id="rp-transfer" class="font-bold text-purple-800 text-xs mt-0.5">0</div>
+                    </div>
+                    <div class="border border-slate-400 p-2 rounded bg-red-50">
+                        <div class="text-[10px] text-slate-700 font-bold">ຄ້າງຈ່າຍ (Pending)</div>
+                        <div id="rp-unpaid" class="font-bold text-red-800 text-xs mt-0.5">0</div>
+                    </div>
+                </div>
+
+                <!-- Income Table -->
+                <div class="mb-5">
+                    <h4 class="font-bold text-slate-800 text-xs mb-1.5 flex items-center justify-between border-b border-slate-400 pb-1">
+                        <span><i class="fa-solid fa-circle-arrow-down text-emerald-600 no-print"></i> I. ລາຍການລາຍຮັບ (Income Transactions)</span>
+                        <span id="rp-income-count" class="text-[10px] text-slate-500 font-normal">0 ລາຍການ</span>
+                    </h4>
+                    <table class="w-full report-table text-[11px] text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 font-bold text-slate-800 text-center">
+                                <th class="w-8">ລ/ດ</th>
+                                <th class="w-20">ເລກໃບບິນ</th>
+                                <th>ຊື່ແລະນາມສະກຸນຜູ້ຮຽນ</th>
+                                <th>ຫຼັກສູດ / ວິຊາ</th>
+                                <th class="w-16">ຫ້ອງ</th>
+                                <th class="w-16">ຮູບແບບ</th>
+                                <th class="w-16">ສະຖານະ</th>
+                                <th>ໝາຍເຫດ/ລາຍລະອຽດເພີ່ມ</th>
+                                <th class="w-24 text-right">ຈຳນວນເງິນ (ກີບ)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rp-income-tbody">
+                            <!-- Dynamic -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Expense Table -->
+                <div class="mb-6">
+                    <h4 class="font-bold text-slate-800 text-xs mb-1.5 flex items-center justify-between border-b border-slate-400 pb-1">
+                        <span><i class="fa-solid fa-circle-arrow-up text-rose-600 no-print"></i> II. ລາຍການລາຍຈ່າຍ (Expense Transactions)</span>
+                        <span id="rp-expense-count" class="text-[10px] text-slate-500 font-normal">0 ລາຍການ</span>
+                    </h4>
+                    <table class="w-full report-table text-[11px] text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 font-bold text-slate-800 text-center">
+                                <th class="w-8">ລ/ດ</th>
+                                <th class="w-20">ເລກທີ</th>
+                                <th>ລາຍລະອຽດ / ຜູ້ຮັບເງິນ</th>
+                                <th>ໝວດໝູ່</th>
+                                <th class="w-20">ຮູບແບບ</th>
+                                <th>ໝາຍເຫດ/ລາຍລະອຽດເພີ່ມ</th>
+                                <th class="w-28 text-right">ຈຳນວນເງິນ (ກີບ)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rp-expense-tbody">
+                            <!-- Dynamic -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Signatures -->
+                <div class="grid grid-cols-2 gap-8 pt-6 text-center text-xs page-break-avoid signature-block">
+                    <div>
+                        <p class="font-bold text-slate-800">ຜູ້ສະຫຼຸບລາຍງານ / ບັນຊີ</p>
+                        <p class="text-[10px] text-slate-500 mb-14">(ລາຍເຊັນ ແລະ ຊື່ແຈ້ງ)</p>
+                        <p class="border-t border-slate-400 pt-1 text-slate-600">....................................................</p>
+                    </div>
+
+                    <div>
+                        <p class="font-bold text-slate-800">ຜູ້ອຳນວຍການ / ຫົວໜ້າສູນ</p>
+                        <p class="text-[10px] text-slate-500 mb-14">(ລາຍເຊັນ ແລະ ຊື່ແຈ້ງ)</p>
+                        <p class="border-t border-slate-400 pt-1 text-slate-800 font-semibold">LITHIGHA KHATTIGHALATH MR</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Official Receipt Modal -->
+    <div id="receipt-modal" class="fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl max-w-3xl w-full p-4 sm:p-6 my-8 relative border border-slate-300">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-200 no-print">
+                <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-receipt text-brand-700"></i> ໃບບິນຮັບເງິນ / Official Receipt Voucher
+                </h3>
+                <div class="flex items-center gap-2">
+                    <button onclick="executePrint('printable-receipt-container')" class="bg-brand-700 hover:bg-brand-800 text-white px-4 py-1.5 rounded-lg text-xs font-semibold shadow flex items-center gap-1">
+                        <i class="fa-solid fa-print"></i> ພິມໃບບິນ A4
+                    </button>
+                    <button onclick="closeReceiptModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold">
+                        ປິດອອກ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Single Voucher Voucher Form - Adjusted perfectly for standard A4 -->
+            <div id="printable-receipt-container" class="bg-white p-5 border-2 border-slate-800 rounded-lg text-slate-900 font-lao text-xs relative page-break-avoid">
+                <!-- Voucher Header -->
+                <div class="flex justify-between items-start border-b border-slate-400 pb-3 mb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-16 h-16 rounded-full border-2 border-slate-800 flex items-center justify-center font-bold text-slate-800 p-1.5 overflow-hidden">
+                            <!-- Elephant with Graduation Cap Vector Graphic -->
+                            <svg viewBox="0 0 100 100" class="w-full h-full text-slate-900" fill="currentColor">
+                                <path d="M50 12 L85 28 L50 44 L15 28 Z" fill="#0f172a"/>
+                                <rect x="75" y="28" width="4" height="15" fill="#0f172a"/>
+                                <circle cx="77" cy="45" r="3" fill="#0f172a"/>
+                                <path d="M30 42 C 20 42, 15 50, 15 65 C 15 78, 22 88, 35 88 C 42 88, 48 84, 50 80 C 52 84, 58 88, 65 88 C 78 88, 85 78, 85 65 C 85 50, 80 42, 70 42 C 60 42, 55 48, 50 52 C 45 48, 40 42, 30 42 Z" fill="#1e293b"/>
+                                <circle cx="35" cy="58" r="4" fill="#ffffff"/>
+                                <circle cx="65" cy="58" r="4" fill="#ffffff"/>
+                                <path d="M46 68 C 46 78, 42 84, 38 86 C 42 88, 50 88, 52 80 C 54 88, 62 88, 66 86 C 62 84, 58 78, 58 68 Z" fill="#ffffff"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-base font-bold text-slate-900 uppercase">ສູນພາສາຊ້າງແກ້ວ</h2>
+                            <p class="text-[10px]">ບ້ານດອນເກົ່າ, ນະຄອນ ແລະ ແຂວງຫຼວງພະບາງ</p>
+                            <p class="text-[10px]">Email: xklc.languagecenter@gmail.com</p>
+                            <p class="text-[10px]">ໂທ: +85620 51111311</p>
+                            <p class="text-[10px]">ທະນາຄານການຄ້າ: 051-12-11008559</p>
+                            <p class="text-[10px] font-semibold">LITHIGHA KHATTIGHALATH MR</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="text-lg font-bold border-b-2 border-slate-900 pb-0.5 px-4 mb-1 inline-block">
+                            ໃບຮັບເງິນ
+                        </div>
+                    </div>
+
+                    <div class="text-right text-[11px]">
+                        <p>ເລກທີ: <span id="rc-no" class="font-bold text-red-600">0001</span></p>
+                        <p>ລົງວັນທີ: <span id="rc-date" class="font-semibold"></span></p>
+                    </div>
+                </div>
+
+                <!-- Customer Details -->
+                <div class="grid grid-cols-2 gap-4 mb-3 text-xs">
+                    <div><strong>ຊື່ແລະນາມສະກຸນຜູ້ຮຽນ:</strong> <span id="rc-payer" class="font-bold underline decoration-dotted"></span></div>
+                    <div><strong>ເບີໂທ ຜູ້ມອບ:</strong> <span id="rc-phone" class="font-bold underline decoration-dotted"></span></div>
+                </div>
+
+                <!-- Receipt Voucher Table matching 7 columns -->
+                <table class="w-full text-[11px] border-collapse border border-slate-800 mb-3">
+                    <thead>
+                        <tr class="bg-slate-100 text-center font-bold border-b border-slate-800">
+                            <th class="border-r border-slate-800 p-1.5 w-8">ລ/ດ</th>
+                            <th class="border-r border-slate-800 p-1.5">ເນື້ອໃນ</th>
+                            <th class="border-r border-slate-800 p-1.5 w-16">ຫ້ອງຮຽນ</th>
+                            <th class="border-r border-slate-800 p-1.5 w-12">ຈຳນວນ</th>
+                            <th class="border-r border-slate-800 p-1.5 w-24">ລາຄາ</th>
+                            <th class="border-r border-slate-800 p-1.5 w-20">ສ່ວນຫຼຸດ</th>
+                            <th class="p-1.5 w-28">ຈຳນວນເງິນ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rc-table-body">
+                        <!-- Dynamic rows + empty fillers -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="border-t border-slate-800 font-bold">
+                            <td colspan="6" class="text-right p-1.5 border-r border-slate-800">ລວມທັງໝົດ:</td>
+                            <td id="rc-grand-total" class="text-right p-1.5 text-xs font-bold">0 ກີບ</td>
+                        </tr>
+                        <tr class="border-t border-slate-800">
+                            <td colspan="7" class="p-2 bg-slate-50">
+                                <strong>ຈຳນວນເງິນເປັນໂຕໜັງສື:</strong> <span id="rc-words" class="font-semibold text-brand-900"></span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- Note / Additional Details Box on Receipt -->
+                <div id="rc-note-box" class="mb-3 p-2 bg-slate-50 border border-slate-400 rounded text-xs hidden">
+                    <strong>ໝາຍເຫດ / ລາຍລະອຽດເພີ່ມເຕີມ:</strong> <span id="rc-note-text" class="text-slate-800"></span>
+                </div>
+
+                <!-- Signatures + QR Code Section -->
+                <div class="grid grid-cols-3 gap-4 text-center text-xs pt-2 signature-block">
+                    <div>
+                        <p class="font-bold">ຜູ້ມອບ</p>
+                        <p class="text-[10px] text-slate-500 mb-8">(ລາຍເຊັນ ແລະ ຊື່ແຈ້ງ)</p>
+                        <p id="rc-sign-payer" class="font-medium text-slate-700 underline decoration-dotted">.......................</p>
+                    </div>
+
+                    <div>
+                        <p class="font-bold">ຜູ້ຮັບ</p>
+                        <p class="text-[10px] text-slate-500 mb-8">(ລາຍເຊັນ ແລະ ຊື່ແຈ້ງ)</p>
+                        <p class="font-medium text-slate-700">.......................</p>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="w-16 h-16 border border-slate-400 p-1 rounded bg-white flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-qrcode text-4xl text-slate-800"></i>
+                        </div>
+                        <span class="text-[9px] text-slate-500 mt-1">LITHIGHA KHATTIGHALATH</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Transaction Modal -->
+    <div id="edit-modal" class="fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl max-w-xl w-full p-5 relative border border-slate-300">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-200">
+                <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-amber-600"></i> ແກ້ໄຂຂໍ້ມູນທຸລະກຳ (<span id="edit-modal-type-title">ລາຍຈ່າຍ</span>)
+                </h3>
+                <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="edit-transaction-form" onsubmit="saveTransactionEdit(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="edit-tx-orig-key">
+                <input type="hidden" id="edit-tx-type">
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ເລກທີໃບບິນ *</label>
+                        <input type="text" id="edit-tx-id" required class="w-full p-2 border border-slate-300 rounded-lg font-bold text-brand-700 outline-none focus:ring-1 focus:ring-brand-600">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ວັນທີ *</label>
+                        <input type="date" id="edit-tx-date" required class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                    </div>
+                    <div>
+                        <label id="lbl-edit-payer" class="block font-semibold text-slate-600 mb-1">ຊື່ແລະນາມສະກຸນຜູ້ຮຽນ *</label>
+                        <input type="text" id="edit-tx-payer" required class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ເບີໂທ</label>
+                        <input type="text" id="edit-tx-phone" class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ຫຼັກສູດ / ໝວດໝູ່</label>
+                        <input type="text" id="edit-tx-course" class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ຫ້ອງຮຽນ</label>
+                        <input type="text" id="edit-tx-classroom" class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ຈຳນວນ</label>
+                        <input type="number" id="edit-tx-qty" min="1" oninput="calculateEditTotal()" class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ລາຄາຕໍ່ໜ່ວຍ</label>
+                        <input type="number" id="edit-tx-price" min="0" oninput="calculateEditTotal()" class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ສ່ວນຫຼຸດ (ກີບ)</label>
+                        <input type="number" id="edit-tx-discount" min="0" oninput="calculateEditTotal()" class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ຈຳນວນເງິນລວມ (ກີບ)</label>
+                        <input type="number" id="edit-tx-amount" readonly class="w-full p-2 bg-slate-100 border border-slate-300 rounded-lg font-bold text-brand-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ຮູບແບບການຈ່າຍ *</label>
+                        <select id="edit-tx-method" class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                            <option value="ເງິນສົດ">ເງິນສົດ (Cash)</option>
+                            <option value="ໂອນ">ໂອນ (Transfer / BCEL One)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">ສະຖານະ *</label>
+                        <select id="edit-tx-status" class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600">
+                            <option value="ຈ່າຍແລ້ວ">ຈ່າຍແລ້ວ (Paid)</option>
+                            <option value="ຄ້າງຈ່າຍ">ຄ້າງຈ່າຍ (Pending/Unpaid)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-600 mb-1">ໝາຍເຫດ / ລາຍລະອຽດເພີ່ມເຕີມ</label>
+                    <textarea id="edit-tx-note" rows="2" class="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-600"></textarea>
+                </div>
+
+                <div class="pt-3 flex gap-2 justify-end">
+                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg font-semibold">
+                        ຍົກເລີກ
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold shadow">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> ບັນທຶກການແກ້ໄຂ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initial Default Mock Data
+        const defaultData = [
+            {
+                uid: "inc_0001",
+                id: "0001",
+                date: new Date().toISOString().split('T')[0],
+                type: "income",
+                payer: "ສົມຊາຍ ໃຈດີ",
+                phone: "020 51111311",
+                course: "ພາສາຈີນສຳລັບເດັກ ລະດັບ 1",
+                classroom: "A1",
+                qty: 1,
+                price: 1200000,
+                discount: 0,
+                amount: 1200000,
+                method: "ເງິນສົດ",
+                status: "ຈ່າຍແລ້ວ",
+                note: "ຄ່າຮຽນເດືອນ 9"
+            },
+            {
+                uid: "inc_0002",
+                id: "0002",
+                date: new Date().toISOString().split('T')[0],
+                type: "income",
+                payer: "ມະນີວອນ ແສງດາວ",
+                phone: "020 99887766",
+                course: "ພາສາອັງກິດສຳລັບຜູ້ໃຫຍ່ ລະດັບ 2",
+                classroom: "B2",
+                qty: 1,
+                price: 1500000,
+                discount: 100000,
+                amount: 1400000,
+                method: "ໂອນ",
+                status: "ຈ່າຍແລ້ວ",
+                note: "ໂອນຜ່ານ BCEL One"
+            },
+            {
+                uid: "exp_0001",
+                id: "0001",
+                date: new Date().toISOString().split('T')[0],
+                type: "expense",
+                payer: "ຄ່າໄຟຟ້າ - ສູນພາສາ",
+                phone: "-",
+                course: "ສາທາລະນຸປະໂພກ",
+                classroom: "-",
+                qty: 1,
+                price: 450000,
+                discount: 0,
+                amount: 450000,
+                method: "ໂອນ",
+                status: "ຈ່າຍແລ້ວ",
+                note: "ບິນຄ່າໄຟປະຈຳເດືອນ"
+            }
+        ];
+
+        // Global Application State
+        let transactions = [];
+        try {
+            const stored = localStorage.getItem('xk_transactions');
+            if (stored) {
+                transactions = JSON.parse(stored);
+                // ensure UIDs exist for older data
+                transactions = transactions.map((t, idx) => {
+                    if (!t.uid) t.uid = `${t.type || 'tx'}_${t.id}_${idx}_${Math.random().toString(36).substr(2, 4)}`;
+                    return t;
+                });
+            } else {
+                transactions = defaultData;
+                localStorage.setItem('xk_transactions', JSON.stringify(transactions));
+            }
+        } catch (e) {
+            transactions = defaultData;
+        }
+
+        let barChartInstance = null;
+        let pieChartInstance = null;
+
+        // Save data to LocalStorage
+        function saveData() {
+            try {
+                localStorage.setItem('xk_transactions', JSON.stringify(transactions));
+            } catch (e) {
+                console.error("Failed to save to localStorage:", e);
+            }
+        }
+
+        // Formatting Helper Functions
+        function formatNumber(num) {
+            if (num === null || num === undefined || isNaN(num)) return "0";
+            return Number(num).toLocaleString('en-US');
+        }
+
+        function formatKip(num) {
+            return formatNumber(num) + ' ກີບ';
+        }
+
+        // Convert Numbers to Lao Words
+        function numberToLaoText(number) {
+            if (isNaN(number) || number === 0) return 'ສູນກີບ';
+            
+            const digits = ['', 'ໜຶ່ງ', 'ສອງ', 'ສາມ', 'ສີ່', 'ຫ້າ', 'ຫົກ', 'ເຈັດ', 'ແປດ', 'ເກົ້າ'];
+            const units = ['', 'ສິບ', 'ຮ້ອຍ', 'ພັນ', 'ໝື່ນ', 'ແສນ', 'ລ້ານ'];
+            
+            let numStr = Math.floor(Math.abs(number)).toString();
+            let result = '';
+            let len = numStr.length;
+
+            if (len > 7) {
+                let millionPart = Math.floor(number / 1000000);
+                let remainder = number % 1000000;
+                return numberToLaoText(millionPart).replace('ກີບ', '') + 'ລ້ານ' + (remainder > 0 ? numberToLaoText(remainder) : 'ກີບ');
+            }
+
+            for (let i = 0; i < len; i++) {
+                let digit = parseInt(numStr[i]);
+                let pos = len - i - 1;
+
+                if (digit !== 0) {
+                    if (pos === 1 && digit === 1) {
+                        result += 'ສິບ';
+                    } else if (pos === 1 && digit === 2) {
+                        result += 'ຊາວ';
+                    } else if (pos === 0 && digit === 1 && len > 1 && numStr[len - 2] !== '0') {
+                        result += 'ເອັດ';
+                    } else {
+                        result += digits[digit] + units[pos];
+                    }
+                }
+            }
+            return result + 'ກີບ';
+        }
+
+        // Generate next invoice number dynamically for 'income' or 'expense'
+        function getNextInvoiceNumber(type = 'income') {
+            if (!transactions || transactions.length === 0) return "0001";
+            const filtered = transactions.filter(t => t.type === type);
+            if (filtered.length === 0) return "0001";
+            let maxNum = 0;
+            filtered.forEach(t => {
+                const num = parseInt(String(t.id).replace(/\D/g, ''), 10);
+                if (!isNaN(num) && num > maxNum) {
+                    maxNum = num;
+                }
+            });
+            return String(maxNum + 1).padStart(4, '0');
+        }
+
+        window.onload = function() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('tx-date');
+            if (dateInput) dateInput.value = todayStr;
+
+            const currentType = document.querySelector('input[name="transType"]:checked')?.value || 'income';
+            const idInput = document.getElementById('tx-id');
+            if (idInput) idInput.value = getNextInvoiceNumber(currentType);
+
+            renderDashboard();
+        };
+
+        function switchTab(tabName) {
+            const tabs = ['dashboard', 'transaction', 'students', 'expenses', 'backup'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                if (el) el.classList.add('hidden');
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if (btn) {
+                    btn.classList.remove('border-brand-600', 'text-brand-600');
+                    btn.classList.add('border-transparent', 'text-slate-400');
+                }
+            });
+
+            const targetTab = document.getElementById(`tab-${tabName}`);
+            if (targetTab) targetTab.classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-transparent', 'text-slate-400');
+                activeBtn.classList.add('border-brand-600', 'text-brand-600');
+            }
+
+            if (tabName === 'dashboard') {
+                renderDashboard();
+            } else if (tabName === 'students') {
+                renderStudentList();
+            } else if (tabName === 'expenses') {
+                renderExpenseList();
+            }
+        }
+
+        function setExpenseMode() {
+            const expenseRadio = document.querySelector('input[name="transType"][value="expense"]');
+            if (expenseRadio) {
+                expenseRadio.checked = true;
+                toggleFormFields();
+            }
+        }
+
+        function setDateRange(range) {
+            const today = new Date();
+            const startDateInput = document.getElementById('filter-start-date');
+            const endDateInput = document.getElementById('filter-end-date');
+
+            if (range === 'today') {
+                const str = today.toISOString().split('T')[0];
+                if (startDateInput) startDateInput.value = str;
+                if (endDateInput) endDateInput.value = str;
+            } else if (range === 'thisMonth') {
+                const y = today.getFullYear();
+                const m = String(today.getMonth() + 1).padStart(2, '0');
+                const firstDay = `${y}-${m}-01`;
+                const lastDay = new Date(y, today.getMonth() + 1, 0).toISOString().split('T')[0];
+                if (startDateInput) startDateInput.value = firstDay;
+                if (endDateInput) endDateInput.value = lastDay;
+            } else if (range === 'all') {
+                if (startDateInput) startDateInput.value = '';
+                if (endDateInput) endDateInput.value = '';
+            }
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const startDate = document.getElementById('filter-start-date')?.value || '';
+            const endDate = document.getElementById('filter-end-date')?.value || '';
+
+            const filtered = transactions.filter(t => {
+                if (startDate && t.date < startDate) return false;
+                if (endDate && t.date > endDate) return false;
+                return true;
+            });
+
+            let totalIncome = 0;
+            let totalExpense = 0;
+            let cashTotal = 0;
+            let transferTotal = 0;
+            let unpaidTotal = 0;
+
+            filtered.forEach(t => {
+                if (t.type === 'income') {
+                    if (t.status === 'ຈ່າຍແລ້ວ') {
+                        totalIncome += (t.amount || 0);
+                        if (t.method === 'ເງິນສົດ') cashTotal += (t.amount || 0);
+                        if (t.method === 'ໂອນ') transferTotal += (t.amount || 0);
+                    } else {
+                        unpaidTotal += (t.amount || 0);
+                    }
+                } else if (t.type === 'expense') {
+                    totalExpense += (t.amount || 0);
+                }
+            });
+
+            const netBalance = totalIncome - totalExpense;
+
+            document.getElementById('kpi-total-income').textContent = formatKip(totalIncome);
+            document.getElementById('kpi-total-expense').textContent = formatKip(totalExpense);
+            document.getElementById('kpi-net-balance').textContent = formatKip(netBalance);
+            document.getElementById('kpi-cash-total').textContent = formatKip(cashTotal);
+            document.getElementById('kpi-transfer-total').textContent = formatKip(transferTotal);
+            document.getElementById('kpi-unpaid-total').textContent = formatKip(unpaidTotal);
+
+            // Recent activity table
+            const tbody = document.getElementById('recent-transactions-tbody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                const recent = filtered.slice(0, 8);
+                if (recent.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">ບໍ່ມີຂໍ້ມູນທຸລະກຳ</td></tr>`;
+                } else {
+                    recent.forEach(t => {
+                        const tr = document.createElement('tr');
+                        tr.className = "hover:bg-slate-50";
+                        const isIncome = t.type === 'income';
+                        tr.innerHTML = `
+                            <td class="p-2.5 whitespace-nowrap text-slate-500">${t.date}</td>
+                            <td class="p-2.5 whitespace-nowrap">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isIncome ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                                    ${isIncome ? 'ລາຍຮັບ' : 'ລາຍຈ່າຍ'}
+                                </span>
+                            </td>
+                            <td class="p-2.5 font-bold ${isIncome ? 'text-emerald-700' : 'text-rose-700'}">#${t.id}</td>
+                            <td class="p-2.5 font-medium text-slate-800">${t.payer}</td>
+                            <td class="p-2.5 text-slate-600">${t.course || t.note || '-'}</td>
+                            <td class="p-2.5 text-slate-600">${t.method || '-'}</td>
+                            <td class="p-2.5 whitespace-nowrap">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${t.status === 'ຈ່າຍແລ້ວ' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600'}">
+                                    ${t.status || 'ຈ່າຍແລ້ວ'}
+                                </span>
+                            </td>
+                            <td class="p-2.5 text-right font-bold ${isIncome ? 'text-emerald-600' : 'text-rose-600'}">
+                                ${isIncome ? '+' : '-'}${formatNumber(t.amount)}
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            renderCharts(totalIncome, totalExpense, cashTotal, transferTotal);
+        }
+
+        function renderCharts(income, expense, cash, transfer) {
+            // Bar Chart: Income vs Expense
+            const barCtx = document.getElementById('barChart')?.getContext('2d');
+            if (barCtx) {
+                if (barChartInstance) barChartInstance.destroy();
+                barChartInstance = new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['ລາຍຮັບ (Income)', 'ລາຍຈ່າຍ (Expense)'],
+                        datasets: [{
+                            label: 'ຈຳນວນເງິນ (ກີບ)',
+                            data: [income, expense],
+                            backgroundColor: ['#16a34a', '#e11d48'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+            }
+
+            // Pie Chart: Cash vs Transfer
+            const pieCtx = document.getElementById('pieChart')?.getContext('2d');
+            if (pieCtx) {
+                if (pieChartInstance) pieChartInstance.destroy();
+                pieChartInstance = new Chart(pieCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['ເງິນສົດ (Cash)', 'ເງິນໂອນ (Transfer)'],
+                        datasets: [{
+                            data: [cash, transfer],
+                            backgroundColor: ['#f59e0b', '#8b5cf6']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+        }
+
+        function calculateTotalAmount() {
+            const qty = parseFloat(document.getElementById('tx-qty').value) || 0;
+            const price = parseFloat(document.getElementById('tx-price').value) || 0;
+            const discount = parseFloat(document.getElementById('tx-discount').value) || 0;
+            const total = (qty * price) - discount;
+            document.getElementById('tx-amount').value = total > 0 ? total : 0;
+        }
+
+        function toggleFormFields() {
+            const transType = document.querySelector('input[name="transType"]:checked').value;
+            const lblPayer = document.getElementById('lbl-payer-name');
+            if (transType === 'expense') {
+                lblPayer.textContent = 'ລາຍລະອຽດລາຍຈ່າຍ / ຜູ້ຮັບເງິນ *';
+            } else {
+                lblPayer.textContent = 'ຊື່ແລະນາມສະກຸນຜູ້ຮຽນ *';
+            }
+
+            // Automatically switch invoice number based on selected type (Income or Expense)
+            const idInput = document.getElementById('tx-id');
+            if (idInput) {
+                idInput.value = getNextInvoiceNumber(transType);
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('transaction-form').reset();
+            document.getElementById('tx-date').value = new Date().toISOString().split('T')[0];
+            const transType = document.querySelector('input[name="transType"]:checked')?.value || 'income';
+            document.getElementById('tx-id').value = getNextInvoiceNumber(transType);
+            calculateTotalAmount();
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const transType = document.querySelector('input[name="transType"]:checked').value;
+            const customId = document.getElementById('tx-id').value.trim();
+            const date = document.getElementById('tx-date').value;
+            const payer = document.getElementById('tx-payer').value.trim();
+            const phone = document.getElementById('tx-phone').value.trim() || '-';
+            const course = document.getElementById('tx-course').value || 'ອື່ນໆ';
+            const classroom = document.getElementById('tx-classroom').value.trim() || '-';
+            const qty = parseInt(document.getElementById('tx-qty').value) || 1;
+            const price = parseFloat(document.getElementById('tx-price').value) || 0;
+            const discount = parseFloat(document.getElementById('tx-discount').value) || 0;
+            const amount = parseFloat(document.getElementById('tx-amount').value) || 0;
+            const method = document.getElementById('tx-payment-method').value;
+            const status = document.getElementById('tx-status').value;
+            const note = document.getElementById('tx-note').value.trim();
+
+            const finalId = customId || getNextInvoiceNumber(transType);
+            const newUid = `${transType}_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
+
+            const newRecord = {
+                uid: newUid,
+                id: finalId,
+                date,
+                type: transType,
+                payer,
+                phone,
+                course,
+                classroom,
+                qty,
+                price,
+                discount,
+                amount,
+                method,
+                status,
+                note
+            };
+
+            transactions.unshift(newRecord);
+            saveData();
+
+            alert('ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ!');
+            resetForm();
+
+            if (transType === 'income') {
+                if (confirm('ທ່ານຕ້ອງການພິມໃບບິນຮັບເງິນເລີຍບໍ?')) {
+                    openReceiptModal(newRecord.uid);
+                }
+            }
+        }
+
+        function renderStudentList() {
+            const searchStr = (document.getElementById('search-student-input')?.value || '').toLowerCase();
+            const courseFilter = document.getElementById('filter-course-select')?.value || '';
+            const statusFilter = document.getElementById('filter-status-select')?.value || '';
+
+            const tbody = document.getElementById('student-list-tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+
+            const students = transactions.filter(t => t.type === 'income');
+
+            const filtered = students.filter(s => {
+                const matchSearch = s.payer.toLowerCase().includes(searchStr) ||
+                                    (s.phone && s.phone.includes(searchStr)) ||
+                                    s.id.toLowerCase().includes(searchStr) ||
+                                    (s.note && s.note.toLowerCase().includes(searchStr));
+                const matchCourse = !courseFilter || s.course.includes(courseFilter);
+                const matchStatus = !statusFilter || s.status === statusFilter;
+                return matchSearch && matchCourse && matchStatus;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="11" class="p-4 text-center text-slate-400">ບໍ່ພົບຂໍ້ມູນນັກຮຽນ</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-100";
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-brand-700">#${s.id}</td>
+                    <td class="p-3 whitespace-nowrap text-slate-600">${s.date}</td>
+                    <td class="p-3 font-semibold text-slate-800">${s.payer}</td>
+                    <td class="p-3 text-slate-600">${s.phone}</td>
+                    <td class="p-3 text-slate-700">${s.course}</td>
+                    <td class="p-3 text-slate-600">${s.classroom}</td>
+                    <td class="p-3 text-slate-600">${s.method}</td>
+                    <td class="p-3 font-bold text-slate-800">${formatNumber(s.amount)}</td>
+                    <td class="p-3 whitespace-nowrap">
+                        <span class="px-2 py-1 rounded-full text-[10px] font-bold ${s.status === 'ຈ່າຍແລ້ວ' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}">
+                            ${s.status}
+                        </span>
+                    </td>
+                    <td class="p-3 text-slate-500">${s.note || '-'}</td>
+                    <td class="p-3 text-center">
+                        <div class="flex items-center justify-center gap-1.5">
+                            <button onclick="openReceiptModal('${s.uid}')" title="ພິມໃບບິນ A4" class="bg-brand-50 text-brand-700 hover:bg-brand-100 p-1.5 rounded-lg text-xs font-medium">
+                                <i class="fa-solid fa-print"></i>
+                            </button>
+                            <button onclick="openEditModal('${s.uid}')" title="ແກ້ໄຂ" class="bg-amber-50 text-amber-700 hover:bg-amber-100 p-1.5 rounded-lg text-xs font-medium">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="deleteRecord('${s.uid}')" title="ລຶບ" class="bg-rose-50 text-rose-700 hover:bg-rose-100 p-1.5 rounded-lg text-xs font-medium">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderExpenseList() {
+            const searchStr = (document.getElementById('search-expense-input')?.value || '').toLowerCase();
+            const methodFilter = document.getElementById('filter-expense-method')?.value || '';
+
+            const tbody = document.getElementById('expense-list-tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+
+            const expenses = transactions.filter(t => t.type === 'expense');
+
+            const filtered = expenses.filter(e => {
+                const matchSearch = e.payer.toLowerCase().includes(searchStr) ||
+                                    (e.course && e.course.toLowerCase().includes(searchStr)) ||
+                                    (e.note && e.note.toLowerCase().includes(searchStr)) ||
+                                    e.id.toLowerCase().includes(searchStr);
+                const matchMethod = !methodFilter || e.method === methodFilter;
+                return matchSearch && matchMethod;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">ບໍ່ພົບຂໍ້ມູນລາຍຈ່າຍ</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(e => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-100";
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-rose-700">#${e.id}</td>
+                    <td class="p-3 whitespace-nowrap text-slate-600">${e.date}</td>
+                    <td class="p-3 font-semibold text-slate-800">${e.payer}</td>
+                    <td class="p-3 text-slate-700">${e.course || 'ອື່ນໆ'}</td>
+                    <td class="p-3 text-slate-600">${e.method}</td>
+                    <td class="p-3 text-right font-bold text-rose-600">${formatNumber(e.amount)}</td>
+                    <td class="p-3 text-slate-500">${e.note || '-'}</td>
+                    <td class="p-3 text-center">
+                        <div class="flex items-center justify-center gap-1.5">
+                            <button onclick="openEditModal('${e.uid}')" title="ແກ້ໄຂ" class="bg-amber-50 text-amber-700 hover:bg-amber-100 p-1.5 rounded-lg text-xs font-medium">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="deleteRecord('${e.uid}')" title="ລຶບ" class="bg-rose-50 text-rose-700 hover:bg-rose-100 p-1.5 rounded-lg text-xs font-medium">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // RECEIPT MODAL LOGIC
+        function openReceiptModal(uid) {
+            const item = transactions.find(t => t.uid === uid);
+            if (!item) return;
+
+            document.getElementById('rc-no').textContent = item.id;
+            document.getElementById('rc-date').textContent = item.date;
+            document.getElementById('rc-payer').textContent = item.payer;
+            document.getElementById('rc-phone').textContent = item.phone || '-';
+            document.getElementById('rc-sign-payer').textContent = item.payer || '.......................';
+
+            const tbody = document.getElementById('rc-table-body');
+            tbody.innerHTML = `
+                <tr class="border-b border-slate-300">
+                    <td class="border-r border-slate-800 p-2 text-center">1</td>
+                    <td class="border-r border-slate-800 p-2 font-semibold">${item.course || 'ຄ່າຮຽນ'}</td>
+                    <td class="border-r border-slate-800 p-2 text-center">${item.classroom || '-'}</td>
+                    <td class="border-r border-slate-800 p-2 text-center">${item.qty || 1}</td>
+                    <td class="border-r border-slate-800 p-2 text-right">${formatNumber(item.price || item.amount)}</td>
+                    <td class="border-r border-slate-800 p-2 text-right">${formatNumber(item.discount || 0)}</td>
+                    <td class="p-2 text-right font-bold">${formatNumber(item.amount)}</td>
+                </tr>
+            `;
+
+            document.getElementById('rc-grand-total').textContent = formatKip(item.amount);
+            document.getElementById('rc-words').textContent = numberToLaoText(item.amount);
+
+            const noteBox = document.getElementById('rc-note-box');
+            const noteText = document.getElementById('rc-note-text');
+            if (item.note && item.note.trim() !== '') {
+                noteText.textContent = item.note;
+                noteBox.classList.remove('hidden');
+            } else {
+                noteBox.classList.add('hidden');
+            }
+
+            document.getElementById('receipt-modal').classList.remove('hidden');
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receipt-modal').classList.add('hidden');
+        }
+
+        // DAILY REPORT MODAL LOGIC
+        function openDailyReportModal() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const targetDateInput = document.getElementById('report-target-date');
+            if (targetDateInput) targetDateInput.value = todayStr;
+            generateDailyReport();
+            document.getElementById('daily-report-modal').classList.remove('hidden');
+        }
+
+        function closeDailyReportModal() {
+            document.getElementById('daily-report-modal').classList.add('hidden');
+        }
+
+        function generateDailyReport() {
+            const targetDate = document.getElementById('report-target-date')?.value || new Date().toISOString().split('T')[0];
+            document.getElementById('report-date-display').textContent = targetDate;
+
+            const dayTransactions = transactions.filter(t => t.date === targetDate);
+
+            let incomeTotal = 0;
+            let expenseTotal = 0;
+            let cashTotal = 0;
+            let transferTotal = 0;
+            let unpaidTotal = 0;
+
+            const incomeList = [];
+            const expenseList = [];
+
+            dayTransactions.forEach(t => {
+                if (t.type === 'income') {
+                    incomeList.push(t);
+                    if (t.status === 'ຈ່າຍແລ້ວ') {
+                        incomeTotal += (t.amount || 0);
+                        if (t.method === 'ເງິນສົດ') cashTotal += (t.amount || 0);
+                        if (t.method === 'ໂອນ') transferTotal += (t.amount || 0);
+                    } else {
+                        unpaidTotal += (t.amount || 0);
+                    }
+                } else if (t.type === 'expense') {
+                    expenseList.push(t);
+                    expenseTotal += (t.amount || 0);
+                }
+            });
+
+            document.getElementById('rp-income').textContent = formatKip(incomeTotal);
+            document.getElementById('rp-expense').textContent = formatKip(expenseTotal);
+            document.getElementById('rp-net').textContent = formatKip(incomeTotal - expenseTotal);
+            document.getElementById('rp-cash').textContent = formatKip(cashTotal);
+            document.getElementById('rp-transfer').textContent = formatKip(transferTotal);
+            document.getElementById('rp-unpaid').textContent = formatKip(unpaidTotal);
+
+            // Populate Income Table
+            const incTbody = document.getElementById('rp-income-tbody');
+            document.getElementById('rp-income-count').textContent = `${incomeList.length} ລາຍການ`;
+            incTbody.innerHTML = '';
+            if (incomeList.length === 0) {
+                incTbody.innerHTML = `<tr><td colspan="9" class="text-center p-3 text-slate-400">ບໍ່ມີລາຍການລາຍຮັບໃນວັນທີນີ້</td></tr>`;
+            } else {
+                incomeList.forEach((t, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="text-center">${index + 1}</td>
+                        <td class="text-center font-bold text-brand-800">#${t.id}</td>
+                        <td class="font-semibold">${t.payer}</td>
+                        <td>${t.course || '-'}</td>
+                        <td class="text-center">${t.classroom || '-'}</td>
+                        <td class="text-center">${t.method || '-'}</td>
+                        <td class="text-center font-semibold ${t.status === 'ຈ່າຍແລ້ວ' ? 'text-emerald-700' : 'text-red-600'}">${t.status}</td>
+                        <td>${t.note || '-'}</td>
+                        <td class="text-right font-bold text-emerald-700">${formatNumber(t.amount)}</td>
+                    `;
+                    incTbody.appendChild(tr);
+                });
+            }
+
+            // Populate Expense Table
+            const expTbody = document.getElementById('rp-expense-tbody');
+            document.getElementById('rp-expense-count').textContent = `${expenseList.length} ລາຍການ`;
+            expTbody.innerHTML = '';
+            if (expenseList.length === 0) {
+                expTbody.innerHTML = `<tr><td colspan="7" class="text-center p-3 text-slate-400">ບໍ່ມີລາຍການລາຍຈ່າຍໃນວັນທີນີ້</td></tr>`;
+            } else {
+                expenseList.forEach((t, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="text-center">${index + 1}</td>
+                        <td class="text-center font-bold text-rose-800">#${t.id}</td>
+                        <td class="font-semibold">${t.payer}</td>
+                        <td>${t.course || 'ອື່ນໆ'}</td>
+                        <td class="text-center">${t.method || '-'}</td>
+                        <td>${t.note || '-'}</td>
+                        <td class="text-right font-bold text-rose-700">${formatNumber(t.amount)}</td>
+                    `;
+                    expTbody.appendChild(tr);
+                });
+            }
+        }
+
+        // EDIT MODAL LOGIC
+        function openEditModal(uid) {
+            const item = transactions.find(t => t.uid === uid);
+            if (!item) return;
+
+            document.getElementById('edit-tx-orig-key').value = item.uid;
+            document.getElementById('edit-tx-type').value = item.type;
+            document.getElementById('edit-modal-type-title').textContent = item.type === 'income' ? 'ລາຍຮັບ' : 'ລາຍຈ່າຍ';
+
+            document.getElementById('lbl-edit-payer').textContent = item.type === 'income' ? 'ຊື່ແລະນາມສະກຸນຜູ້ຮຽນ *' : 'ລາຍລະອຽດລາຍຈ່າຍ / ຜູ້ຮັບເງິນ *';
+
+            document.getElementById('edit-tx-id').value = item.id;
+            document.getElementById('edit-tx-date').value = item.date;
+            document.getElementById('edit-tx-payer').value = item.payer;
+            document.getElementById('edit-tx-phone').value = item.phone || '';
+            document.getElementById('edit-tx-course').value = item.course || '';
+            document.getElementById('edit-tx-classroom').value = item.classroom || '';
+            document.getElementById('edit-tx-qty').value = item.qty || 1;
+            document.getElementById('edit-tx-price').value = item.price || item.amount;
+            document.getElementById('edit-tx-discount').value = item.discount || 0;
+            document.getElementById('edit-tx-amount').value = item.amount;
+            document.getElementById('edit-tx-method').value = item.method || 'ເງິນສົດ';
+            document.getElementById('edit-tx-status').value = item.status || 'ຈ່າຍແລ້ວ';
+            document.getElementById('edit-tx-note').value = item.note || '';
+
+            document.getElementById('edit-modal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+        }
+
+        function calculateEditTotal() {
+            const qty = parseFloat(document.getElementById('edit-tx-qty').value) || 0;
+            const price = parseFloat(document.getElementById('edit-tx-price').value) || 0;
+            const discount = parseFloat(document.getElementById('edit-tx-discount').value) || 0;
+            const total = (qty * price) - discount;
+            document.getElementById('edit-tx-amount').value = total > 0 ? total : 0;
+        }
+
+        function saveTransactionEdit(e) {
+            e.preventDefault();
+
+            const uid = document.getElementById('edit-tx-orig-key').value;
+            const index = transactions.findIndex(t => t.uid === uid);
+            if (index === -1) return;
+
+            const updated = {
+                ...transactions[index],
+                id: document.getElementById('edit-tx-id').value.trim(),
+                date: document.getElementById('edit-tx-date').value,
+                payer: document.getElementById('edit-tx-payer').value.trim(),
+                phone: document.getElementById('edit-tx-phone').value.trim(),
+                course: document.getElementById('edit-tx-course').value.trim(),
+                classroom: document.getElementById('edit-tx-classroom').value.trim(),
+                qty: parseInt(document.getElementById('edit-tx-qty').value) || 1,
+                price: parseFloat(document.getElementById('edit-tx-price').value) || 0,
+                discount: parseFloat(document.getElementById('edit-tx-discount').value) || 0,
+                amount: parseFloat(document.getElementById('edit-tx-amount').value) || 0,
+                method: document.getElementById('edit-tx-method').value,
+                status: document.getElementById('edit-tx-status').value,
+                note: document.getElementById('edit-tx-note').value.trim()
+            };
+
+            transactions[index] = updated;
+            saveData();
+
+            alert('ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ!');
+            closeEditModal();
+
+            renderDashboard();
+            renderStudentList();
+            renderExpenseList();
+        }
+
+        function deleteRecord(uid) {
+            if (confirm('ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບລາຍການນີ້?')) {
+                transactions = transactions.filter(t => t.uid !== uid);
+                saveData();
+                renderDashboard();
+                renderStudentList();
+                renderExpenseList();
+            }
+        }
+
+        // PRINT EXECUTION FUNCTION
+        function executePrint(elementId) {
+            const printElement = document.getElementById(elementId);
+            if (!printElement) return;
+
+            // Add printable class to element
+            printElement.classList.add('printable-active');
+
+            window.print();
+
+            // Clean up after print
+            setTimeout(() => {
+                printElement.classList.remove('printable-active');
+            }, 500);
+        }
+
+        // BACKUP & EXPORT FUNCTIONS
+        function clearExportDates() {
+            document.getElementById('export-start-date').value = '';
+            document.getElementById('export-end-date').value = '';
+        }
+
+        function getFilteredTransactionsForExport() {
+            const startDate = document.getElementById('export-start-date')?.value || '';
+            const endDate = document.getElementById('export-end-date')?.value || '';
+
+            return transactions.filter(t => {
+                if (startDate && t.date < startDate) return false;
+                if (endDate && t.date > endDate) return false;
+                return true;
+            });
+        }
+
+        function exportToCSV() {
+            const list = getFilteredTransactionsForExport();
+            if (list.length === 0) {
+                alert('ບໍ່ມີຂໍ້ມູນໃນຊ່ວງວັນທີທີ່ເລືອກ');
+                return;
+            }
+
+            let csvContent = "\uFEFF"; // UTF-8 BOM
+            csvContent += "Type,InvoiceNo,Date,Payer/Description,Phone,Course/Category,Classroom,Qty,Price,Discount,Amount,Method,Status,Note\n";
+
+            list.forEach(t => {
+                const row = [
+                    `"${t.type}"`,
+                    `"${t.id}"`,
+                    `"${t.date}"`,
+                    `"${(t.payer || '').replace(/"/g, '""')}"`,
+                    `"${t.phone || ''}"`,
+                    `"${(t.course || '').replace(/"/g, '""')}"`,
+                    `"${t.classroom || ''}"`,
+                    t.qty || 1,
+                    t.price || 0,
+                    t.discount || 0,
+                    t.amount || 0,
+                    `"${t.method || ''}"`,
+                    `"${t.status || ''}"`,
+                    `"${(t.note || '').replace(/"/g, '""')}"`
+                ];
+                csvContent += row.join(",") + "\n";
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `xk_transactions_export_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportToJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(transactions, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", `xk_backup_${new Date().toISOString().split('T')[0]}.json`);
+            dlAnchorElem.click();
+        }
+
+        function importJSONData() {
+            const fileInput = document.getElementById('import-file-input');
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert('ກະລຸນາເລືອກໄຟລ໌ JSON ກ່ອນ!');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (Array.isArray(importedData)) {
+                        transactions = importedData;
+                        saveData();
+                        alert('ນຳເຂົ້າຂໍ້ມູນສຳເລັດແລ້ວ!');
+                        renderDashboard();
+                    } else {
+                        alert('ຮູບແບບໄຟລ໌ JSON ບໍ່ຖືກຕ້ອງ!');
+                    }
+                } catch (err) {
+                    alert('ເກີດຂໍ້ຜິດພາດໃນການອ່ານໄຟລ໌!');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function clearAllData() {
+            if (confirm('ທ່ານແນ່ໃຈ ຫຼື ບໍ່ ທີ່ຈະລຶບຂໍ້ມູນທັງໝົດໃນລະບົບ?')) {
+                transactions = [];
+                localStorage.removeItem('xk_transactions');
+                renderDashboard();
+                alert('ລຶບຂໍ້ມູນທັງໝົດສຳເລັດແລ້ວ');
+            }
+        }
+    </script>
+</body>
+</html>
